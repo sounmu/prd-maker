@@ -16,7 +16,35 @@ export type Spec = {
   }[];
   out_of_scope: string[];
   risks: string[];
+  checklist: { task: string; owner: string }[];
   first_prompt: string;
+};
+
+export type SpecInput = {
+  title: string;
+  problem: string;
+  target: string;
+  timeframe: Timeframe;
+};
+
+export type SpecListItem = {
+  id: string;
+  created_at: string;
+  title: string;
+  product_name: string;
+  timeframe: string;
+  one_liner: string | null;
+};
+
+export type SpecRow = {
+  id: string;
+  created_at: string;
+  title: string;
+  problem: string;
+  target: string | null;
+  timeframe: string;
+  product_name: string;
+  spec: Spec;
 };
 
 export const TIMEFRAMES = ["해커톤 24시간", "1주", "1달"] as const;

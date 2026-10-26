@@ -1,4 +1,7 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useState, type ReactNode } from "react";
+import { specToMarkdown } from "@/lib/markdown";
 import type { Spec } from "@/lib/types";
 
 function Section({ label, children }: { label: string; children: ReactNode }) {
@@ -21,6 +24,18 @@ function Mono({ children }: { children: ReactNode }) {
 }
 
 export default function SpecView({ spec }: { spec: Spec }) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(specToMarkdown(spec));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      alert("복사하지 못했습니다. 브라우저 권한을 확인해 주세요.");
+    }
+  }
+
   return (
     <article className="rounded-card border border-border bg-card p-5 sm:p-6">
       <header className="flex items-start justify-between gap-4">
@@ -32,9 +47,10 @@ export default function SpecView({ spec }: { spec: Spec }) {
         </div>
         <button
           type="button"
+          onClick={handleCopy}
           className="shrink-0 rounded-lg border border-border px-3 py-1.5 text-sm"
         >
-          마크다운 복사
+          {copied ? "복사됨" : "마크다운 복사"}
         </button>
       </header>
 
@@ -121,6 +137,20 @@ export default function SpecView({ spec }: { spec: Spec }) {
         <ul className="list-disc space-y-1 pl-5 leading-7">
           {spec.risks.map((item) => (
             <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section label="준비물·역할 분담 체크리스트">
+        <ul className="space-y-2">
+          {spec.checklist.map((c) => (
+            <li key={c.task} className="flex items-start gap-3">
+              <span className="mt-1 h-4 w-4 shrink-0 rounded border border-border" />
+              <span>
+                {c.task}
+                <span className="text-muted"> · {c.owner}</span>
+              </span>
+            </li>
           ))}
         </ul>
       </Section>
