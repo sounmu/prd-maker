@@ -27,3 +27,13 @@
 - 브라우저 코드는 `fetch("/api/...")`로만 데이터를 주고받는다.
 - API 에러 응답은 항상 `{ error: string }` + 알맞은 status (400 입력 오류, 404 없음, 500 DB, 502 AI).
 - OpenAI/Supabase 클라이언트는 모듈 최상단이 아니라 함수 안에서 만든다 (`getSupabase()`처럼). 환경변수가 없어도 빌드가 터지지 않게.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
